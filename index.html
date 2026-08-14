@@ -1,35 +1,550 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rings Shouldn't Be This Powerful</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        .chapter {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <h1>Rings Shouldn't Be This Powerful</h1>
-    <div class="chapter">
-        <h2>Chapter One: Lenethia</h2>
-        <p>Welcome to the story...</p>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rings Shouldn't Be This Powerful — Chapter One</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%238FE0EC' stroke-width='8'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,500&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --void:#080c14;
+    --panel:#0f1b2e;
+    --panel-edge:#1c2c45;
+    --ink:#e9eef5;
+    --muted:#7e90ab;
+    --ice:#8fe0ec;
+    --ice-dim:#48707c;
+    --ember:#cf9f56;
+    --ember-dim:#473826;
+    --max:700px;
+  }
+ 
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+ 
+  body{
+    margin:0;
+    background:var(--void);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    font-size:18px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+ 
+  ::selection{background:var(--ice-dim); color:#fff;}
+ 
+  a{color:var(--ice);}
+ 
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ice);
+  }
+ 
+  /* ---------- progress bar ---------- */
+  #progress{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg, var(--ice-dim), var(--ice));
+    z-index:50; transition:width .08s linear;
+  }
+ 
+  /* ---------- sticky mini header ---------- */
+  #mini-header{
+    position:fixed; top:0; left:0; right:0;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    background:rgba(8,12,20,.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--panel-edge);
+    z-index:40;
+    transform:translateY(-100%);
+    transition:transform .35s ease;
+  }
+  #mini-header.show{transform:translateY(0);}
+  #mini-header .title{
+    font-family:'Bodoni Moda', serif; font-weight:600; font-size:15px;
+    letter-spacing:.02em;
+  }
+  #mini-header .chap{
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    letter-spacing:.15em; color:var(--muted); text-transform:uppercase;
+  }
+ 
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:80px 24px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 38%, rgba(58,98,112,.35), transparent 70%),
+      var(--void);
+  }
+ 
+  .hero svg.cracks{
+    position:absolute; top:50%; left:50%;
+    width:min(1100px, 150vw); height:auto;
+    transform:translate(-50%,-50%);
+    opacity:.55;
+    pointer-events:none;
+  }
+ 
+  .hero svg.cracks path{
+    fill:none;
+    stroke:var(--ice);
+    stroke-width:1;
+    stroke-linecap:round;
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+    animation:draw 2.4s ease-out forwards;
+  }
+  .hero svg.cracks path:nth-child(1){animation-delay:.1s;}
+  .hero svg.cracks path:nth-child(2){animation-delay:.35s;}
+  .hero svg.cracks path:nth-child(3){animation-delay:.55s;}
+  .hero svg.cracks path:nth-child(4){animation-delay:.2s;}
+  .hero svg.cracks path:nth-child(5){animation-delay:.5s;}
+  .hero svg.cracks path:nth-child(6){animation-delay:.7s;}
+ 
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+ 
+  .hero .kicker{
+    margin-bottom:22px;
+  }
+ 
+  .hero h1{
+    position:relative;
+    font-family:'Bodoni Moda', serif;
+    font-weight:700;
+    font-size:clamp(2.4rem, 7vw, 5.2rem);
+    line-height:1.04;
+    letter-spacing:-.01em;
+    max-width:14ch;
+    margin:0 0 26px;
+    background:linear-gradient(180deg, #ffffff 0%, var(--ink) 55%, var(--ice) 130%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 60px rgba(143,224,236,.18);
+  }
+ 
+  .hero .byline{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:.1em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+  .hero .byline strong{color:var(--ink); font-weight:500;}
+ 
+  .scroll-cue{
+    margin-top:64px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .scroll-cue .line{
+    width:1px; height:34px;
+    background:linear-gradient(var(--ice), transparent);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:.25;}50%{opacity:1;}}
+ 
+  /* ---------- sections ---------- */
+  section{
+    padding:96px 24px;
+  }
+  .inner{
+    max-width:var(--max);
+    margin:0 auto;
+  }
+ 
+  .lore{
+    background:var(--panel);
+    border-top:1px solid var(--panel-edge);
+    border-bottom:1px solid var(--panel-edge);
+  }
+ 
+  .lore h2, .chapter-head h2{
+    font-family:'Bodoni Moda', serif;
+    font-weight:600;
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    margin:10px 0 28px;
+  }
+ 
+  .lore p{ color:var(--ink); margin:0 0 20px;}
+  .lore > .inner > p{color:#cbd6e6;}
+ 
+  .codex{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin:34px 0;
+  }
+  .codex .card{
+    border:1px solid var(--panel-edge);
+    background:rgba(255,255,255,.015);
+    padding:24px 22px;
+    opacity:0; transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .codex .card.in{opacity:1; transform:translateY(0);}
+  .codex .card .eyebrow{display:block; margin-bottom:10px;}
+  .codex .card p{font-size:.96rem; color:#b9c5d8; margin:0;}
+ 
+  .threat{
+    border-left:2px solid var(--ember);
+    background:linear-gradient(90deg, var(--ember-dim), transparent 60%);
+    padding:20px 24px;
+    margin-top:36px;
+  }
+  .threat p{margin:0; color:#e7d9bd; font-style:italic;}
+ 
+  /* ---------- chapter head ---------- */
+  .chapter-head{
+    text-align:center;
+    padding-bottom:48px;
+  }
+  .chapter-head .rule{
+    width:80px; height:1px; background:var(--panel-edge);
+    margin:30px auto 0;
+  }
+ 
+  /* dramatis personae */
+  .cast{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px;
+    margin-top:40px;
+  }
+  .cast .chip{
+    border:1px solid var(--panel-edge);
+    padding:12px 18px;
+    min-width:140px;
+    opacity:0; transform:translateY(10px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .cast .chip.in{opacity:1; transform:translateY(0);}
+  .cast .chip .name{font-family:'Bodoni Moda', serif; font-weight:600; font-size:1.02rem;}
+  .cast .chip .role{font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; margin-top:4px;}
+  .cast .chip .tag{
+    display:inline-block; margin-top:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:3px 8px; border-radius:2px;
+  }
+  .tag-ice{color:#0a1b1f; background:var(--ice);}
+  .tag-water{color:#06141f; background:#7fb2dd;}
+  .tag-lightning{color:#1b0a23; background:#c79bf0;}
+  .tag-none{color:var(--muted); background:transparent; border:1px solid var(--panel-edge); padding:3px 8px;}
+ 
+  /* ---------- chapter body ---------- */
+  .chapter{padding-top:0;}
+  .chapter .inner{font-size:1.05rem;}
+ 
+  .chapter p{margin:0 0 22px; color:#dde4ee;}
+ 
+  .chapter p.first::first-letter{
+    font-family:'Bodoni Moda', serif;
+    font-weight:700;
+    font-size:3.6em;
+    float:left;
+    line-height:.82;
+    padding:.04em .08em 0 0;
+    color:var(--ice);
+  }
+ 
+  .dialogue{
+    margin:0 0 18px;
+    padding-left:18px;
+    border-left:2px solid var(--ice-dim);
+  }
+  .dialogue .speaker{
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ice);
+    margin-bottom:4px;
+  }
+  .dialogue p{margin:0; color:#eef2f8;}
+ 
+  .thought{
+    margin:0 0 18px;
+    padding-left:18px;
+    border-left:2px dashed var(--panel-edge);
+  }
+  .thought .speaker{
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:4px;
+  }
+  .thought p{margin:0; font-style:italic; color:#a9b6cc;}
+ 
+  .divider{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin:52px 0;
+    color:var(--ice-dim);
+  }
+  .divider .bar{height:1px; width:60px; background:var(--panel-edge);}
+  .divider .mark{font-size:13px; color:var(--ice);}
+ 
+  blockquote.inscription{
+    margin:34px 0;
+    padding:24px 26px;
+    border:1px solid var(--ember-dim);
+    background:rgba(207,159,86,.05);
+    position:relative;
+  }
+  blockquote.inscription:before{
+    content:"";
+    position:absolute; left:0; top:0; bottom:0; width:2px;
+    background:var(--ember);
+  }
+  blockquote.inscription p{
+    margin:0;
+    font-family:'Source Serif 4', serif;
+    font-style:italic;
+    color:#ead9b6;
+    font-size:1.02rem;
+  }
+ 
+  /* ---------- footer ---------- */
+  footer{
+    text-align:center;
+    padding:100px 24px 120px;
+    border-top:1px solid var(--panel-edge);
+  }
+  footer .eyebrow{display:block; margin-bottom:18px;}
+  footer h3{
+    font-family:'Bodoni Moda', serif;
+    font-weight:600;
+    font-size:1.6rem;
+    margin:0 0 28px;
+    color:var(--ink);
+  }
+  footer .next{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--panel-edge);
+    padding:10px 18px;
+  }
+ 
+  /* ---------- back to top ---------- */
+  #top-btn{
+    position:fixed; bottom:24px; right:24px;
+    width:42px; height:42px;
+    border:1px solid var(--panel-edge);
+    background:rgba(15,27,46,.9);
+    color:var(--ice);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    cursor:pointer;
+    opacity:0; pointer-events:none;
+    transition:opacity .3s ease;
+    z-index:45;
+  }
+  #top-btn.show{opacity:1; pointer-events:auto;}
+  #top-btn:focus-visible{outline:2px solid var(--ice); outline-offset:2px;}
+ 
+  @media (max-width:700px){
+    .codex{grid-template-columns:1fr;}
+    section{padding:64px 20px;}
+    body{font-size:16.5px;}
+    .cast .chip{min-width:120px;}
+  }
+ 
+  @media (prefers-reduced-motion: reduce){
+    .hero svg.cracks path{animation:none; stroke-dashoffset:0;}
+    .scroll-cue .line{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+ </head>
+ <body>
+  <div id="progress"></div>
+  <div id="mini-header">
+   <span class="title">Rings Shouldn't Be This Powerful</span> <span class="chap">Ch. 1 — Humble Beginnings</span>
+  </div>
+  <!-- HERO -->
+  <header class="hero" id="hero">
+   <svg class="cracks" viewBox="0 0 1000 600" aria-hidden="true">
+    <path d="M500 300 L420 220 L380 150 L400 70" /> <path d="M500 300 L590 210 L640 140 L610 60" /> <path d="M500 300 L380 330 L300 360 L220 340" /> <path d="M500 300 L620 350 L700 380 L780 360" /> <path d="M500 300 L470 400 L440 480 L460 560" /> <path d="M500 300 L540 410 L580 470 L550 555" />
+   </svg>
+   <div class="kicker eyebrow">A Light Novel · Book One</div>
+   <h1>Rings Shouldn't Be This Powerful</h1>
+   <div class="byline">
+    Written by <strong>Prince Jessie</strong>
+   </div>
+   <div class="scroll-cue">
+    <span class="line"></span>Begin Reading
+   </div>
+  </header>
+  <!-- LORE / PROLOGUE -->
+  <section class="lore" id="lore">
+   <div class="inner">
+    <span class="eyebrow">Prologue</span>
+    <h2>The World of Lenithia</h2>
+    <p>Throughout history, there have always been rings imbued with extraordinary power — legendary artifacts known as <strong>Fabled Rings</strong>. These mystical treasures possessed unique abilities that transcended ordinary magic. But their fate took a dark turn during a devastating war that occurred long ago. Many of these powerful rings were lost to time, and some were destroyed amid the chaos.</p>
+    <div class="codex">
+     <div class="card">
+      <span class="eyebrow">Fabled Rings</span>
+      <p>The surviving rings, still brimming with immense power, were entrusted to select organizations and prestigious schools, each dedicated to preserving and controlling their ancient magic. Their locations are known only to a few, and their power is guarded from those who might misuse it.</p>
+     </div>
+     <div class="card">
+      <span class="eyebrow">Arcane Rings</span>
+      <p>Common yet potent, Arcane Rings channel elemental magic — fire, ice, wind, and earth. Each is enhanced by a specific stone: sapphire calls water, and others answer to other elements. Arcane Rings are tasked with protecting the Fabled Rings and keeping the elemental balance.</p>
+     </div>
     </div>
-</body>
-</html>
+    <div class="threat">
+     <p>The world of Lenithia now faces a dire threat. Portals to other realms — once sealed by the Fabled Rings — are beginning to open, threatening to unleash chaos and destruction. It now falls to the bearers of both rings to harness their combined power, close the gateways, and keep the calamity from consuming everything.</p>
+    </div>
+   </div>
+  </section>
+  <!-- CHAPTER HEAD -->
+  <section class="chapter-head">
+   <div class="inner">
+    <span class="eyebrow">Chapter One</span>
+    <h2>Humble Beginnings</h2>
+    <div class="cast">
+     <div class="chip">
+      <div class="name">Jessie</div>
+      <div class="role">Student, Age 15</div>
+      <span class="tag tag-ice">Ice</span>
+     </div>
+     <div class="chip">
+      <div class="name">Ramon</div>
+      <div class="role">Jessie's Friend</div>
+      <span class="tag tag-none">—</span>
+     </div>
+     <div class="chip">
+      <div class="name">Sir Mular</div>
+      <div class="role">Professor, Mentor</div>
+      <span class="tag tag-water">Water</span>
+     </div>
+     <div class="chip">
+      <div class="name">The Stranger</div>
+      <div class="role">Unknown</div>
+      <span class="tag tag-lightning">Lightning</span>
+     </div>
+    </div>
+    <div class="rule"></div>
+   </div>
+  </section>
+  <!-- CHAPTER BODY -->
+  <section class="chapter">
+   <div class="inner">
+    <p class="first">In a hidden chamber beneath the prestigious academy of Athenia — rumored to be built atop the ruins of an older civilization — a young student named Jessie uncovers an Arcane Ring behind a secret door in the library. As he holds it, a faint, mysterious energy pulses through the band.</p>
+    <div class="dialogue">
+     <span class="speaker">Jessie</span>
+     <p>“Woah — an Arcane Ring! I thought these were usually hidden somewhere in the school, but this doesn't look like a normal Arcane Ring.”</p>
+    </div>
+    <p>He examines the ring and the scroll it was found with. The scroll is inscribed with ancient symbols related to ice magic — skills and incantations for controlling ice. His excitement fades into concern.</p>
+    <div class="thought">
+     <span class="speaker">Jessie, to himself</span>
+     <p>I don't even know how to use an Arcane Ring, and I definitely don't have any PriVo to activate it.</p>
+    </div>
+    <div class="thought">
+     <span class="speaker">Jessie, to himself</span>
+     <p>Well — I do have some PriVo, but I still don't know how to use an Arcane Ring. Before any of that, I need to get out of here before someone finds me.</p>
+    </div>
+    <div class="thought">
+     <span class="speaker">Jessie, to himself</span>
+     <p>I definitely don't want detention because of this. The Academy of Athenia doesn't really like misbehaving students.</p>
+    </div>
+    <p>Determined to understand more about the ring and its potential, Jessie resolves to study the scroll and seek guidance from someone who knows about Arcane Rings.</p>
+    <div class="divider">
+     <span class="bar"></span><span class="mark">❅</span><span class="bar"></span>
+    </div>
+    <p>After escaping the hidden chamber, Jessie returns to class, his mind racing from the discovery. When his professor asks where he's been, Jessie answers—</p>
+    <div class="dialogue">
+     <span class="speaker">Jessie</span>
+     <p>“Sir, I went to the bathroom.”</p>
+    </div>
+    <p>He sits back down. His good friend Ramon leans over.</p>
+    <div class="dialogue">
+     <span class="speaker">Ramon</span>
+     <p>“Dude — thirty minutes to go to the bathroom? What the hell were you doing in there?”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Jessie</span>
+     <p>“Dude, come on — a man's got to relieve himself somehow.”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Ramon</span>
+     <p>“Alright, you're not wrong. Are you busy later? I was thinking of coming to your house to do the project.”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Jessie</span>
+     <p>“What project? Maaan, I'm tired of this.”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Ramon</span>
+     <p>“I was gone for a week — family problem — and I have to catch up. I believe you're done with it, so you don't have to worry.”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Jessie</span>
+     <p>“Oh, that project — yeah, I'm done. I can help you, but I'm busy later, sorry man.”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Ramon</span>
+     <p>“No problem, man.”</p>
+    </div>
+    <p>The teacher notices the two of them talking and cuts in.</p>
+    <div class="dialogue">
+     <span class="speaker">Professor</span>
+     <p>“You two — stop talking and listen. You should be lucky you got into this academy. We don't usually accept commoners.”</p>
+    </div>
+    <div class="thought">
+     <span class="speaker">Jessie, to himself</span>
+     <p>Gosh — even the professors don't like commoners.</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Ramon</span>
+     <p>“Yeah. No joke.”</p>
+    </div>
+    <div class="divider">
+     <span class="bar"></span><span class="mark">❅</span><span class="bar"></span>
+    </div>
+    <p>Distracted through the rest of class, Jessie can't stop thinking about the ring. Once classes end, he heads to a secluded spot behind the academy and unrolls the scroll — only to find it's written in a language he doesn't understand.</p>
+    <div class="dialogue">
+     <span class="speaker">Jessie, frustrated</span>
+     <p>“If I'm really going to do this, I need a mentor.”</p>
+    </div>
+    <p>His thoughts turn to Sir Mular — a professor he's always admired despite his strict nature.</p>
+    <div class="thought">
+     <span class="speaker">Jessie, to himself</span>
+     <p>I don't even know if Sir Mular would agree to be my mentor… but he's a good teacher, and I have to try.</p>
+    </div>
+    <p>With newfound determination, Jessie sets out to find Sir Mular after classes end, knowing the professor often stays late to practice magic. He knocks on the office door — no answer, which is odd, since Sir Mular is almost always there. Searching the campus, he eventually finds him alone in the courtyard, practicing his Arcane Ring magic.</p>
+    <div class="thought">
+     <span class="speaker">Jessie, to himself</span>
+     <p>I have to try my best… look at him, he's doing it effortlessly. Damn.</p>
+    </div>
+    <p>As he walks toward Sir Mular, he narrowly dodges a stray water spear.</p>
+    <div class="dialogue">
+     <span class="speaker">Sir Mular, smirking</span>
+     <p>“Well done, Jessie. You dodged that pretty well. What brings you here?”</p>
+    </div>
+    <div class="dialogue">
+     <span class="speaker">Jessie, flustered</span>
+     <p>“Sir — will you be my mentor?”</p>
+    </div>
+    <div class="dialogue
